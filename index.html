@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3rB AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         SETUP SCREEN
+    ========================== -->
+    <div class="setup-screen" id="setupScreen">
+
+        <div class="setup-card">
+
+            <div class="setup-logo">
+                <img src="3rb-ai.png" alt="3rB AI">
+            </div>
+
+            <h1>مرحبًا بك في 3rB AI</h1>
+            <p>جهز حسابك وابدأ المحادثة</p>
+
+            <div class="setup-grid">
+
+                <div class="setup-profile">
+
+                    <div class="setup-avatar-wrap">
+                        <img
+                            src="3rb-ai.png"
+                            alt="المستخدم"
+                            id="userAvatarPreview"
+                        >
+                    </div>
+
+                    <input
+                        type="file"
+                        id="userAvatarInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                    <button
+                        class="avatar-upload"
+                        type="button"
+                        onclick="document.getElementById('userAvatarInput').click()"
+                    >
+                        اختيار صورتك
+                    </button>
+
+                    <label for="userName">اسمك</label>
+
+                    <input
+                        type="text"
+                        id="userName"
+                        placeholder="اكتب اسمك"
+                        maxlength="30"
+                    >
+
+                </div>
+
+
+                <div class="setup-profile">
+
+                    <div class="setup-avatar-wrap">
+                        <img
+                            src="3rb-ai.png"
+                            alt="3rB AI"
+                            id="assistantAvatarPreview"
+                        >
+                    </div>
+
+                    <input
+                        type="file"
+                        id="assistantAvatarInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                    <button
+                        class="avatar-upload"
+                        type="button"
+                        onclick="document.getElementById('assistantAvatarInput').click()"
+                    >
+                        اختيار صورة AI
+                    </button>
+
+                    <label for="assistantName">اسم المساعد</label>
+
+                    <input
+                        type="text"
+                        id="assistantName"
+                        placeholder="3rB AI"
+                        maxlength="30"
+                    >
+
+                </div>
+
+            </div>
+
+            <button class="start-button" id="startButton">
+                ابدأ الآن
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         APP
+    ========================== -->
+    <div class="app" id="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+
+                <div class="brand">
+
+                    <img
+                        src="3rb-ai.png"
+                        alt="3rB AI"
+                        class="brand-logo"
+                        id="sidebarAvatar"
+                    >
+
+                    <div>
+                        <strong>3rB AI</strong>
+                        <span>AI Assistant</span>
+                    </div>
+
+                </div>
+
+                <button
+                    class="icon-button mobile-only"
+                    id="closeSidebar"
+                    aria-label="إغلاق"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <button
+                class="new-chat-button"
+                id="newChatButton"
+            >
+                <span>＋</span>
+                محادثة جديدة
+            </button>
+
+
+            <div class="chat-search">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="chatSearch"
+                    placeholder="البحث في المحادثات..."
+                >
+
+            </div>
+
+
+            <div class="chat-list" id="chatList">
+
+                <div
+                    class="empty-chats"
+                    id="emptyChats"
+                >
+                    لا توجد محادثات بعد
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <button
+                    class="profile-button"
+                    id="profileButton"
+                >
+
+                    <img
+                        src="3rb-ai.png"
+                        alt="Profile"
+                        id="sidebarProfileAvatar"
+                    >
+
+                    <div>
+                        <strong id="sidebarName">أحمد</strong>
+                        <span>الإعدادات والملف الشخصي</span>
+                    </div>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="main">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div class="topbar-right">
+
+                    <button
+                        class="icon-button mobile-only"
+                        id="openSidebar"
+                        aria-label="فتح القائمة"
+                    >
+                        ☰
+                    </button>
+
+
+                    <div class="assistant-title">
+
+                        <img
+                            src="3rb-ai.png"
+                            alt="3rB AI"
+                            class="top-logo"
+                            id="topAssistantAvatar"
+                        >
+
+                        <div>
+
+                            <strong id="topAssistantName">
+                                3rB AI
+                            </strong>
+
+                            <small>
+                                Online
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <button
+                        class="icon-button"
+                        id="webButton"
+                        title="البحث على الويب"
+                    >
+                        ◉
+                    </button>
+
+                    <button
+                        class="icon-button"
+                        id="clearChatButton"
+                        title="مسح المحادثة"
+                    >
+                        ⌫
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- CHAT AREA -->
+            <section class="chat-area" id="chatArea">
+
+                <!-- WELCOME -->
+                <div
+                    class="welcome-screen"
+                    id="welcomeScreen"
+                >
+
+                    <div class="hero-logo">
+
+                        <img
+                            src="3rb-ai.png"
+                            alt="3rB AI"
+                            id="heroAvatar"
+                        >
+
+                    </div>
+
+                    <h1>
+                        أهلاً بيك في 3rB AI
+                    </h1>
+
+                    <p>
+                        اسأل، اتعلم، اكتب، وابحث مع مساعدك الذكي.
+                    </p>
+
+
+                    <div class="suggestions">
+
+                        <button
+                            class="suggestion-card"
+                            data-prompt="اشرح لي هذا الموضوع بطريقة بسيطة"
+                        >
+                            <span>💡</span>
+                            <strong>اشرح لي موضوع</strong>
+                            <small>بطريقة سهلة وبسيطة</small>
+                        </button>
+
+
+                        <button
+                            class="suggestion-card"
+                            data-prompt="ساعدني في كتابة كود"
+                        >
+                            <span>💻</span>
+                            <strong>ساعدني في البرمجة</strong>
+                            <small>اكتب لي كود واضح</small>
+                        </button>
+
+
+                        <button
+                            class="suggestion-card"
+                            data-prompt="لخص لي هذا الموضوع"
+                        >
+                            <span>📝</span>
+                            <strong>لخص لي</strong>
+                            <small>المعلومات المهمة فقط</small>
+                        </button>
+
+
+                        <button
+                            class="suggestion-card"
+                            data-prompt="ساعدني في أفكاري"
+                        >
+                            <span>🚀</span>
+                            <strong>ساعدني في أفكاري</strong>
+                            <small>خلينا نبدأ</small>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGES -->
+                <div
+                    class="messages"
+                    id="messages"
+                ></div>
+
+            </section>
+
+
+            <!-- COMPOSER -->
+            <div class="composer-container">
+
+                <div
+                    class="attachment-preview"
+                    id="attachmentPreview"
+                ></div>
+
+
+                <div class="composer">
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        hidden
+                        multiple
+                    >
+
+
+                    <button
+                        class="composer-button"
+                        type="button"
+                        onclick="document.getElementById('fileInput').click()"
+                        title="إرفاق ملف"
+                    >
+                        ＋
+                    </button>
+
+
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="اكتب رسالتك إلى 3rB AI..."
+                    ></textarea>
+
+
+                    <button
+                        class="composer-button"
+                        id="voiceButton"
+                        type="button"
+                        title="الصوت"
+                    >
+                        🎙
+                    </button>
+
+
+                    <button
+                        class="send-button"
+                        id="sendButton"
+                        type="button"
+                        title="إرسال"
+                    >
+                        ➤
+                    </button>
+
+                </div>
+
+
+                <div class="composer-note">
+                    3rB AI يمكن أن يخطئ، تحقق من المعلومات المهمة.
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         SETTINGS MODAL
+    ========================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalOverlay"
+    ></div>
+
+
+    <div
+        class="settings-modal"
+        id="settingsModal"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>الإعدادات</h2>
+                <p>تخصيص تجربة 3rB AI</p>
+
+            </div>
+
+            <button
+                class="icon-button"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="settings-tabs">
+
+            <button
+                class="settings-tab active"
+                data-tab="profileTab"
+            >
+                الملف الشخصي
+            </button>
+
+            <button
+                class="settings-tab"
+                data-tab="assistantTab"
+            >
+                المساعد
+            </button>
+
+            <button
+                class="settings-tab"
+                data-tab="appearanceTab"
+            >
+                المظهر
+            </button>
+
+        </div>
+
+
+        <div class="settings-content">
+
+            <!-- PROFILE TAB -->
+            <div
+                class="tab-content active"
+                id="profileTab"
+            >
+
+                <label>اسمك</label>
+
+                <input
+                    type="text"
+                    id="settingsUserName"
+                >
+
+
+                <label>صورتك</label>
+
+                <div class="settings-avatar-row">
+
+                    <img
+                        src="3rb-ai.png"
+                        id="settingsUserAvatar"
+                        alt="User"
+                    >
+
+                    <input
+                        type="file"
+                        id="settingsUserInput"
+                        accept="image/*"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSISTANT TAB -->
+            <div
+                class="tab-content"
+                id="assistantTab"
+            >
+
+                <label>اسم المساعد</label>
+
+                <input
+                    type="text"
+                    id="settingsAssistantName"
+                >
+
+
+                <label>صورة المساعد</label>
+
+                <div class="settings-avatar-row">
+
+                    <img
+                        src="3rb-ai.png"
+                        id="settingsAssistantAvatar"
+                        alt="3rB AI"
+                    >
+
+                    <input
+                        type="file"
+                        id="settingsAssistantInput"
+                        accept="image/*"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- APPEARANCE TAB -->
+            <div
+                class="tab-content"
+                id="appearanceTab"
+            >
+
+                <div class="appearance-option">
+                    <strong>المظهر</strong>
+                    <span>الوضع الداكن مفعل</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="secondary-button"
+                id="resetSettings"
+            >
+                إعادة ضبط
+            </button>
+
+            <button
+                class="primary-button"
+                id="saveSettings"
+            >
+                حفظ التغييرات
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
